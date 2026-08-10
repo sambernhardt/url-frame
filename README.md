@@ -2,6 +2,10 @@
 
 Minimal browser chrome nested in a ray.so-style frame — for Slack screenshots where the URL matters.
 
+| Light | Dark |
+| --- | --- |
+| ![Light mode](screenshots/swr-md-light.png) | ![Dark mode](screenshots/swr-dark.png) |
+
 ## Requirements
 
 - macOS, Windows, or Linux
