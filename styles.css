@@ -1,0 +1,481 @@
+/* App chrome follows OS appearance (Electron nativeTheme → data-app-theme) */
+:root,
+html[data-app-theme="light"] {
+  --app-bg: #f4f4f5;
+  --app-glow: rgba(0, 0, 0, 0.03);
+  --bar-bg: rgba(255, 255, 255, 0.86);
+  --bar-border: rgba(0, 0, 0, 0.08);
+  --text: #18181b;
+  --muted: #71717a;
+  --panel: #ffffff;
+  --panel-2: #f4f4f5;
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --control-bg: rgba(0, 0, 0, 0.04);
+  --control-bg-focus: rgba(0, 0, 0, 0.06);
+  --control-border: rgba(0, 0, 0, 0.1);
+  --control-border-focus: rgba(0, 0, 0, 0.22);
+  --hover: rgba(0, 0, 0, 0.06);
+  --seg-active: #e4e4e7;
+  --seg-active-text: #18181b;
+  --swatch-ring: #18181b;
+  --toggle-off: #d4d4d8;
+  --placeholder: #a1a1aa;
+  --btn: #18181b;
+  --btn-hover: #27272a;
+  --btn-text: #fafafa;
+  --stage-pad: 64px;
+  --stage-bg: #f5f5f5;
+  color-scheme: light;
+}
+
+html[data-app-theme="dark"] {
+  --app-bg: #0a0a0a;
+  --app-glow: rgba(255, 255, 255, 0.04);
+  --bar-bg: rgba(18, 18, 18, 0.92);
+  --bar-border: rgba(255, 255, 255, 0.08);
+  --text: #f5f5f5;
+  --muted: #8a8a8a;
+  --panel: #171717;
+  --panel-2: #222222;
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --control-bg: rgba(255, 255, 255, 0.04);
+  --control-bg-focus: rgba(255, 255, 255, 0.06);
+  --control-border: rgba(255, 255, 255, 0.08);
+  --control-border-focus: rgba(255, 255, 255, 0.2);
+  --hover: rgba(255, 255, 255, 0.06);
+  --seg-active: #3f3f46;
+  --seg-active-text: #ffffff;
+  --swatch-ring: #ffffff;
+  --toggle-off: #3f3f46;
+  --placeholder: #666666;
+  --btn: #fafafa;
+  --btn-hover: #e4e4e7;
+  --btn-text: #18181b;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-app-theme]) {
+    --app-bg: #0a0a0a;
+    --app-glow: rgba(255, 255, 255, 0.04);
+    --bar-bg: rgba(18, 18, 18, 0.92);
+    --bar-border: rgba(255, 255, 255, 0.08);
+    --text: #f5f5f5;
+    --muted: #8a8a8a;
+    --panel: #171717;
+    --panel-2: #222222;
+    --panel-border: rgba(255, 255, 255, 0.08);
+    --control-bg: rgba(255, 255, 255, 0.04);
+    --control-bg-focus: rgba(255, 255, 255, 0.06);
+    --control-border: rgba(255, 255, 255, 0.08);
+    --control-border-focus: rgba(255, 255, 255, 0.2);
+    --hover: rgba(255, 255, 255, 0.06);
+    --seg-active: #3f3f46;
+    --seg-active-text: #ffffff;
+    --swatch-ring: #ffffff;
+    --toggle-off: #3f3f46;
+    --placeholder: #666666;
+    --btn: #fafafa;
+    --btn-hover: #e4e4e7;
+    --btn-text: #18181b;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  background: var(--app-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 52px 1fr auto;
+}
+
+/* —— App chrome (not exported) —— */
+
+.app-bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px 0 78px;
+  background: var(--bar-bg);
+  border-bottom: 1px solid var(--bar-border);
+  -webkit-app-region: drag;
+  user-select: none;
+  backdrop-filter: blur(12px);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: no-drag;
+  min-width: 0;
+}
+
+.app-bar-spacer {
+  min-width: 0;
+}
+
+.logo-text {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.export-btn {
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--btn);
+  color: var(--btn-text);
+  font: 600 12.5px/1 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  transition: background 120ms ease, transform 80ms ease, opacity 120ms ease;
+}
+
+.export-btn:hover {
+  background: var(--btn-hover);
+}
+
+.export-btn:active {
+  transform: scale(0.98);
+}
+
+.export-btn.success {
+  background: #16a34a;
+  color: #fff;
+}
+
+.export-btn.error {
+  background: #b91c1c;
+  color: #fff;
+}
+
+/* —— Workspace / stage —— */
+
+.workspace {
+  display: grid;
+  place-items: center;
+  padding: 28px 28px 12px;
+  overflow: auto;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--app-glow), transparent 55%),
+    var(--app-bg);
+}
+
+.stage {
+  --pad: var(--stage-pad);
+  --stage-bg: #f5f5f5;
+  width: min(960px, 100%);
+  aspect-ratio: 16 / 10;
+  max-height: calc(100vh - 180px);
+  padding: var(--pad);
+  background: var(--stage-bg);
+  border-radius: 4px;
+  display: flex;
+  position: relative;
+  transition: padding 180ms ease, background 180ms ease;
+}
+
+/* Match nested window mode: off-white in light, black in dark */
+.stage:has(.browser.dark) {
+  --stage-bg: #000000;
+}
+
+.stage[data-bg="off"] {
+  background: transparent;
+}
+
+/* Chroma key while copying with Background off → real transparent PNG.
+   Drop the soft shadow for the shot so it doesn't fringe against the key. */
+body.capturing-transparent .stage[data-bg="off"] {
+  background: #ff00aa !important;
+}
+
+body.capturing-transparent .browser {
+  box-shadow: none;
+}
+
+.stage[data-padding="16"] {
+  --stage-pad: 16px;
+}
+.stage[data-padding="32"] {
+  --stage-pad: 32px;
+}
+.stage[data-padding="64"] {
+  --stage-pad: 64px;
+}
+.stage[data-padding="128"] {
+  --stage-pad: 128px;
+}
+
+/* —— Nested browser window (light / dark) —— */
+
+.browser {
+  /* Light mode (default) — matches Vercel/sandbox window chrome */
+  --win-bg: #ffffff;
+  --win-border: rgba(0, 0, 0, 0.12);
+  --win-divider: #eaeaea;
+  --win-url: #666666;
+  --win-empty-text: #666666;
+  --win-empty-muted: #999999;
+  --win-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 12px 28px rgba(0, 0, 0, 0.08);
+
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--win-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--win-shadow);
+  border: 1px solid var(--win-border);
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.browser.dark {
+  --win-bg: #0a0a0a;
+  --win-border: rgba(255, 255, 255, 0.18);
+  --win-divider: #333333;
+  --win-url: #a1a1a1;
+  --win-empty-text: #ededed;
+  --win-empty-muted: #888888;
+  --win-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.browser-chrome {
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 70px 1fr 70px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: var(--win-bg);
+  border-bottom: 1px solid var(--win-divider);
+}
+
+.traffic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 2px;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+}
+
+.browser.dark .dot {
+  border-color: #666666;
+}
+
+.browser-url {
+  height: 28px;
+  min-width: 0;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  background: transparent;
+  border: none;
+  color: var(--win-url);
+}
+
+#url-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 13px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  color: var(--win-url);
+  caret-color: var(--win-url);
+}
+
+#url-input::placeholder {
+  color: var(--win-empty-muted);
+}
+
+#url-input:focus {
+  text-overflow: clip;
+}
+
+.browser-body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--win-bg);
+}
+
+webview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+webview.visible {
+  opacity: 1;
+}
+
+.empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  text-align: center;
+  pointer-events: none;
+  background: var(--win-bg);
+}
+
+.empty p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--win-empty-text);
+}
+
+.empty .hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--win-empty-muted);
+}
+
+.empty.hidden {
+  display: none;
+}
+
+/* —— Bottom toolbar —— */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  padding: 14px 20px 18px;
+  background: transparent;
+  user-select: none;
+}
+
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.tool-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.toggle {
+  width: 36px;
+  height: 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--toggle-off);
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  transition: background 140ms ease;
+}
+
+.toggle.on {
+  background: #22c55e;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 140ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.toggle.on .toggle-knob {
+  transform: translateX(14px);
+}
+
+.seg {
+  display: flex;
+  gap: 4px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.seg button {
+  min-width: 32px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font: 500 12px/1 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.seg button.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.seg button:hover:not(.active) {
+  color: var(--text);
+}

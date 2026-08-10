@@ -1,0 +1,15 @@
+{
+  "name": "url-frame",
+  "version": "1.0.0",
+  "description": "Minimal browser chrome for screenshots with URL visible",
+  "main": "main.js",
+  "scripts": {
+    "start": "ELECTRON_RUN_AS_NODE= electron .",
+    "dev": "ELECTRON_RUN_AS_NODE= electron ."
+  },
+  "author": "Sam Bernhardt",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^37.2.0"
+  }
+}

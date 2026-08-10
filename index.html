@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Copy browser as image</title>
+    <script src="theme-boot.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-bar">
+      <div class="app-brand">
+        <span class="logo-text">Copy browser as image</span>
+      </div>
+      <div class="app-bar-spacer" aria-hidden="true"></div>
+      <button type="button" class="export-btn" id="copy-btn">
+        <span id="copy-label">Copy Image</span>
+      </button>
+    </header>
+
+    <main class="workspace">
+      <div class="stage" id="stage" data-padding="64" data-bg="on">
+        <div class="browser" id="browser">
+          <div class="browser-chrome">
+            <div class="traffic">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <form class="browser-url" id="url-form">
+              <input
+                id="url-input"
+                type="text"
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="Enter a URL"
+              />
+            </form>
+            <div class="traffic-spacer" aria-hidden="true"></div>
+          </div>
+          <div class="browser-body">
+            <webview
+              id="view"
+              src="about:blank"
+              allowpopups
+              webpreferences="contextIsolation=yes"
+            ></webview>
+            <div class="empty" id="empty">
+              <p>Click the URL bar to load a page</p>
+              <p class="hint">The framed browser is what gets copied</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="toolbar">
+      <div class="tool">
+        <span class="tool-label">Background</span>
+        <button type="button" class="toggle on" id="bg-toggle" aria-pressed="true">
+          <span class="toggle-knob"></span>
+        </button>
+      </div>
+
+      <div class="tool">
+        <span class="tool-label">Padding</span>
+        <div class="seg" id="padding-seg" role="group" aria-label="Padding">
+          <button type="button" data-padding="16">16</button>
+          <button type="button" data-padding="32">32</button>
+          <button type="button" class="active" data-padding="64">64</button>
+          <button type="button" data-padding="128">128</button>
+        </div>
+      </div>
+
+      <div class="tool">
+        <span class="tool-label">Dark</span>
+        <button
+          type="button"
+          class="toggle"
+          id="mode-toggle"
+          aria-pressed="false"
+          aria-label="Toggle dark window"
+          title="Light / dark window"
+        >
+          <span class="toggle-knob"></span>
+        </button>
+      </div>
+    </footer>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
